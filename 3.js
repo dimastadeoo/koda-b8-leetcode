@@ -50,3 +50,87 @@ Constraints:
 s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').
 It is guaranteed that s is a valid roman numeral in the range [1, 3999].
  */
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function(s) {
+    const obj = {
+        "I": 1,
+        "V": 5,
+        "X": 10,
+        "L": 50,
+        "C": 100,
+        "D": 500,
+        "M": 1000 
+    }
+    let num = 0
+    const strToArr = s.split('')
+    const rom = []
+    let checkI;
+    strToArr.forEach((e) =>{
+        switch (e) {
+            case "I":
+                rom.push(e)
+                num += obj.I
+                break;
+            case "V":
+                checkI = rom.filter((word) => word === "I");
+                if (checkI.length === 1){
+                    num += obj.V - (obj.I*2)
+                }else{
+                    num += obj.V
+                }
+                break;
+            case "X":
+                rom.push(e)
+                checkI = rom.filter((word) => word === "I");
+                if (checkI.length === 1){
+                    num += obj.X - (obj.I*2)
+                }else{
+                    num += obj.X
+                }
+                break;
+            case "L":
+                checkI = rom.filter((word) => word === "X");
+                if (checkI.length === 1){
+                    num += obj.L - (obj.X*2)
+                }else{
+                    num += obj.L
+                }
+                break;
+            case "C":
+                rom.push(e)
+                checkI = rom.filter((word) => word === "X");
+                if (checkI.length === 1){
+                    num += obj.C - (obj.X*2)
+                }else{
+                    num += obj.C
+                }
+                break;
+            case "D":
+                checkI = rom.filter((word) => word === "C");
+                if (checkI.length === 1){
+                    num += obj.D - (obj.C*2)
+                }else{
+                    num += obj.D
+                }
+                break;
+            case "M":
+                rom.push(e)
+                checkI = rom.filter((word) => word === "C");
+                if (checkI.length === 1){
+                    num += obj.M - (obj.C*2)
+                }else{
+                    num += obj.M
+                }
+                break;   
+            default:
+                return
+        }
+        
+    }) 
+        return num
+
+};
